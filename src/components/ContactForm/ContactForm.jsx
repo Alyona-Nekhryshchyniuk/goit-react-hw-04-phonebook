@@ -7,7 +7,7 @@ import { Label } from './Label.styled';
 import { BsFillTelephonePlusFill } from 'react-icons/bs';
 import { useState } from 'react';
 
-const ContactForm = () => {
+const ContactForm = ({ addContact }) => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
 
@@ -21,7 +21,7 @@ const ContactForm = () => {
       color="#ffee7d"
       onSubmit={e => {
         e.preventDefault();
-        this.props.addContact({ name, number });
+        addContact({ name, number });
         setName('');
         setNumber('');
       }}

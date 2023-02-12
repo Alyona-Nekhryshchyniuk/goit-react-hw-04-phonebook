@@ -10,37 +10,42 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    new Promise((resolve, reject) => {
+    new Promise(resolve => {
       resolve(JSON.parse(localStorage.getItem('contacts')));
     }).then(storageData => {
-      if (storageData) return setContacts([...storageData]);
+      Boolean(storageData.length) && setContacts([...storageData]);
     });
   }, []);
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
-  // componentDidUpdate(_, prevState) {
-  //   if (prevState.contacts.length < this.state.contacts.length) {
-  //     localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-  //   }
-  // }
 
-  const addContact = ({ newName, number }) => {
-    console.log(contacts);
-    contacts.find(obj => obj.name === newName)
+  const addContact = ({ name, number }) => {
+    contacts.find(obj => obj.name === name)
       ? alert(`${name} is already in contacts`)
-      : this.setState(prevState => ({
-          contacts: [{ name, id: nanoid(), number }, ...prevState.contacts],
-        }));
+      : setContacts(prevContacts => [
+          { name, id: nanoid(), number },
+          ...prevContacts,
+        ]);
   };
 
   const deleteContact = ContactId => {
-    // setContacts(contacts.filter(contact => ContactId !== contact.id))
-    // this.setState(({ contacts }) => ({
-    //   contacts: contacts.filter(contact => ContactId !== contact.id),
-    // }));
+    setContacts(contacts.filter(contact => ContactId !== contact.id));
   };
+
+  // const addContact = ({ name, number }) => {
+  //   contacts.find(obj => obj.name === name)
+  //     ? alert(`${name} is already in contacts`)
+  //     : setContacts(prevContacts => [
+  //         { name, id: nanoid(), number },
+  //         ...prevContacts,
+  //       ]);
+  // };
+
+  // const deleteContact = ContactId => {
+  //   setContacts(contacts.filter(contact => ContactId !== contact.id));
+  // };
 
   const updateFilterInState = value => {
     setFilter(value);
