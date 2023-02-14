@@ -12,8 +12,8 @@ const App = () => {
   useEffect(() => {
     new Promise(resolve => {
       resolve(JSON.parse(localStorage.getItem('contacts')));
-    }).then(({ storageData }) => {
-      Boolean(storageData.length) && setContacts([...storageData]);
+    }).then(storageData => {
+      if (storageData.length) setContacts([...storageData]);
     });
   }, []);
 
