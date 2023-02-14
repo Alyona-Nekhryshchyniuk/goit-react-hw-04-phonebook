@@ -12,7 +12,7 @@ const App = () => {
   useEffect(() => {
     new Promise(resolve => {
       resolve(JSON.parse(localStorage.getItem('contacts')));
-    }).then(storageData => {
+    }).then(({ storageData }) => {
       Boolean(storageData.length) && setContacts([...storageData]);
     });
   }, []);
